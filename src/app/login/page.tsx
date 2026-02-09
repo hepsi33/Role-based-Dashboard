@@ -38,6 +38,8 @@ export default function LoginPage() {
 
                 if (session?.user?.status === "pending") {
                     router.push("/pending");
+                } else if (session?.user?.status === "rejected") {
+                    router.push("/access-denied");
                 } else if (session?.user?.role === "admin") {
                     router.push("/admin");
                 } else {

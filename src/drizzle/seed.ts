@@ -57,7 +57,12 @@ async function main() {
         });
         console.log("Admin user seeded successfully");
     } else {
-        console.log("Admin user already exists");
+        // Update password for existing user
+        const passwordHash = await hash(adminPassword, 10);
+        await db.update(users)
+            .set({ password: passwordHash })
+            .where(eq(users.email, adminEmail));
+        console.log("Admin user password updated successfully");
     }
 }
 
