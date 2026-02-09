@@ -2,6 +2,8 @@
 
 A premium dashboard application with secure authentication, role-based access control, and a modern dark theme UI.
 
+🔗 **Live Demo:** [https://role-based-three.vercel.app](https://role-based-three.vercel.app)
+
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)
@@ -21,6 +23,7 @@ A premium dashboard application with secure authentication, role-based access co
 - **Backend**: Next.js API Routes
 - **Database**: PostgreSQL (Neon) with Drizzle ORM
 - **Authentication**: NextAuth.js v5
+- **Deployment**: Vercel
 
 ## Getting Started
 
@@ -78,22 +81,34 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 2. **Pending** → User sees pending approval page
 3. **Admin Approval** → Admin approves/rejects in dashboard
 4. **Access Granted** → Approved users access dashboard
+5. **Access Denied** → Rejected users see access denied page
 
 ## Project Structure
 
 ```
 src/
 ├── app/
-│   ├── admin/          # Admin dashboard
+│   ├── admin/          # Admin dashboard with stats
 │   ├── dashboard/      # User dashboard
 │   ├── login/          # Login page
 │   ├── signup/         # Sign up page
 │   ├── pending/        # Pending approval page
+│   ├── access-denied/  # Rejected users page
 │   └── api/            # API routes
 ├── components/         # Reusable UI components
 ├── drizzle/            # Database schema & migrations
 └── lib/                # Utilities (auth, db)
 ```
+
+## Environment Variables (Vercel)
+
+For deployment, set these in Vercel:
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `AUTH_SECRET` | NextAuth secret key |
+| `NEXTAUTH_URL` | Your Vercel deployment URL |
 
 ## License
 
