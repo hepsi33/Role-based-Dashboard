@@ -1,12 +1,24 @@
-"use client";
-
-import { useSession, signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
+import { auth } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { users } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { LogOut, Activity, Users, DollarSign } from "lucide-react";
+import { Activity, Users, DollarSign } from "lucide-react";
+import { SignOutButton } from "@/components/sign-out-button";
 
-export default function UserDashboard() {
-    const { data: session } = useSession();
+export default async function UserDashboard() {
+    const session = await auth();
+
+    if (!session?.user) {
+        redirect("/login");
+    }
+
+    const user = await db.query.users.findFirst({
+        where: eq(users.id, session.user.id),
+    });
+
+    const displayName = user?.name || session.user.name || "User";
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -15,20 +27,19 @@ export default function UserDashboard() {
                     <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
                     <div className="flex items-center gap-4">
                         <div className="text-right hidden md:block">
-                            <p className="text-sm font-medium text-gray-900">{session?.user?.name}</p>
-                            <p className="text-xs text-gray-500">{session?.user?.email}</p>
+                            <p className="text-sm font-medium text-gray-900">{displayName}</p>
+                            <p className="text-xs text-gray-500">{user?.email || session.user.email}</p>
                         </div>
-                        <Button variant="outline" size="sm" onClick={() => signOut({ callbackUrl: "/" })}>
-                            <LogOut className="w-4 h-4 mr-2" />
-                            Sign Out
-                        </Button>
+                        <SignOutButton />
                     </div>
                 </div>
             </header>
 
             <main className="container mx-auto px-4 py-8 flex-1">
                 <div className="mb-8">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900">Welcome, {session?.user?.name?.split(' ')[0] || 'User'}!</h2>
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+                        Welcome, {displayName.split(' ')[0]}!
+                    </h2>
                     <p className="text-gray-500 mt-2">Here's what's happening today.</p>
                 </div>
 
