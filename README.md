@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Role-Based Dashboard
+
+A premium dashboard application with secure authentication, role-based access control, and a modern dark theme UI.
+
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)
+
+## Features
+
+- 🔐 **Secure Authentication** - NextAuth.js with credentials provider and bcrypt password hashing
+- 👥 **Role-Based Access Control** - Admin and User roles with protected routes
+- ✅ **User Approval System** - New users require admin approval before accessing the dashboard
+- 🎨 **Dark Theme UI** - Modern glassmorphism design with gradient accents
+- 📊 **Admin Dashboard** - View user stats (approved, pending, rejected) and manage approvals
+- ⚡ **Fast & Modern** - Built with Next.js 16 and Turbopack
+
+## Tech Stack
+
+- **Frontend**: Next.js 16, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: PostgreSQL (Neon) with Drizzle ORM
+- **Authentication**: NextAuth.js v5
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+
+- PostgreSQL database (or Neon account)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/hepsi33/Role-based-Dashboard.git
+cd Role-based-Dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Edit `.env` with your database URL and auth secret:
+```env
+DATABASE_URL="your-postgresql-connection-string"
+AUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-## Learn More
+4. Push the database schema:
+```bash
+npm run db:push
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. Seed the admin user:
+```bash
+npm run db:seed
+```
+Default admin: `test@test.com` / `Test123@123`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. Run the development server:
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deploy on Vercel
+## User Flow
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Sign Up** → User creates account (status: pending)
+2. **Pending** → User sees pending approval page
+3. **Admin Approval** → Admin approves/rejects in dashboard
+4. **Access Granted** → Approved users access dashboard
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── admin/          # Admin dashboard
+│   ├── dashboard/      # User dashboard
+│   ├── login/          # Login page
+│   ├── signup/         # Sign up page
+│   ├── pending/        # Pending approval page
+│   └── api/            # API routes
+├── components/         # Reusable UI components
+├── drizzle/            # Database schema & migrations
+└── lib/                # Utilities (auth, db)
+```
+
+## License
+
+MIT
