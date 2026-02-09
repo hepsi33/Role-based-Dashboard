@@ -34,10 +34,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     throw new Error("Invalid password.");
                 }
 
-                if (user.status !== "approved") {
-                    throw new Error("Account not approved yet.");
-                }
-
+                // Return user with status - let the client handle redirection
                 return {
                     id: user.id,
                     name: user.name,

@@ -7,17 +7,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardFooter, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
+import { UserPlus } from "lucide-react";
 
 export default function SignupPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
+        setLoading(true);
 
         try {
             const res = await fetch("/api/auth/signup", {
@@ -34,30 +37,37 @@ export default function SignupPage() {
             }
         } catch (err) {
             setError("Something went wrong");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black">
-            <Card className="w-[400px] shadow-2xl glass">
-                <CardHeader className="text-center">
-                    <CardTitle className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">Join Us</CardTitle>
-                    <CardDescription>Create your account to get started</CardDescription>
+        <div className="flex items-center justify-center min-h-screen bg-[#0a0a0a]">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-blue-900/20" />
+            <Card className="w-[420px] glass border-white/10 shadow-2xl relative z-10">
+                <CardHeader className="text-center space-y-2">
+                    <div className="mx-auto bg-purple-500/20 p-3 rounded-full w-fit">
+                        <UserPlus className="w-8 h-8 text-purple-400" />
+                    </div>
+                    <CardTitle className="text-3xl font-bold text-white">Create Account</CardTitle>
+                    <CardDescription className="text-gray-400">Sign up to get started with our platform</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-5">
                         <div className="space-y-2">
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="name" className="text-gray-300">Full Name</Label>
                             <Input
                                 id="name"
                                 placeholder="John Doe"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 required
+                                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-purple-500 focus:ring-purple-500/20"
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email" className="text-gray-300">Email</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -65,29 +75,40 @@ export default function SignupPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
+                                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-purple-500 focus:ring-purple-500/20"
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password" className="text-gray-300">Password</Label>
                             <Input
                                 id="password"
                                 type="password"
+                                placeholder="••••••••"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
+                                className="bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-purple-500 focus:ring-purple-500/20"
                             />
                         </div>
-                        {error && <p className="text-red-500 text-sm">{error}</p>}
-                        <Button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 transition-all duration-300">
-                            Sign Up
+                        {error && (
+                            <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm text-center p-3 rounded-lg animate-fade-in">
+                                {error}
+                            </div>
+                        )}
+                        <Button
+                            type="submit"
+                            className="w-full bg-purple-600 hover:bg-purple-700 text-white transition-all duration-300"
+                            disabled={loading}
+                        >
+                            {loading ? "Creating account..." : "Sign Up"}
                         </Button>
                     </form>
                 </CardContent>
-                <CardFooter className="justify-center">
-                    <p className="text-sm text-gray-500">
+                <CardFooter className="justify-center border-t border-white/10 pt-6">
+                    <p className="text-sm text-gray-400">
                         Already have an account?{" "}
-                        <Link href="/login" className="text-primary-600 hover:underline">
-                            Log in
+                        <Link href="/login" className="text-purple-400 hover:text-purple-300 hover:underline font-medium">
+                            Sign in
                         </Link>
                     </p>
                 </CardFooter>

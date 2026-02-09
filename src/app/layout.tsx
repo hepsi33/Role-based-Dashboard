@@ -22,7 +22,7 @@ export default async function RootLayout({
   console.log(`[RootLayout] Session: ${session?.user?.email ? "Logged In (" + session.user.email + ")" : "Logged Out"}`);
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${inter.variable} antialiased font-sans`}>
         <Providers session={session}>{children}</Providers>
       </body>
