@@ -49,14 +49,9 @@ export default async function Home() {
                     <Link href={dashboardLink}>Go to Dashboard</Link>
                   </Button>
                 ) : (
-                  <>
-                    <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200">
-                      <Link href="/get-started">Get Started</Link>
-                    </Button>
-                    <Button asChild variant="outline" size="lg" className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white">
-                      <Link href="/login">Sign In</Link>
-                    </Button>
-                  </>
+                  <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200">
+                    <Link href="/signup">Create Account</Link>
+                  </Button>
                 )}
               </div>
             </div>

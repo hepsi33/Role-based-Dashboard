@@ -28,14 +28,9 @@ export default async function GetStartedPage() {
                             <SignOutButton />
                         </>
                     ) : (
-                        <>
-                            <Button asChild variant="ghost">
-                                <Link href="/login">Log In</Link>
-                            </Button>
-                            <Button asChild className="ml-2">
-                                <Link href="/signup">Sign Up</Link>
-                            </Button>
-                        </>
+                        <Button asChild>
+                            <Link href="/signup">Create Account</Link>
+                        </Button>
                     )}
                 </div>
             </header>
