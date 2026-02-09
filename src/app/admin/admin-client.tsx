@@ -108,7 +108,9 @@ export function AdminDashboardClient() {
                             <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => signOut({ callbackUrl: "/login" })}
+                                onClick={async () => {
+                                    await signOut({ redirect: true, callbackUrl: "/login" });
+                                }}
                                 className="border-white/20 text-gray-300 hover:bg-white/10 hover:text-white"
                             >
                                 <LogOut className="w-4 h-4 mr-2" />
