@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { SignOutButton } from "@/components/sign-out-button";
 
 export function NavButtons() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const isLoggedIn = !!session?.user;
     const dashboardLink = session?.user?.role === "admin" ? "/admin" : "/dashboard";
+
+    console.log("[Client Render] NavButtons | Status:", status, "| LoggedIn:", isLoggedIn, "| Role:", session?.user?.role);
 
     if (isLoggedIn) {
         return (
@@ -29,9 +31,11 @@ export function NavButtons() {
 }
 
 export function HeroButtons() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const isLoggedIn = !!session?.user;
     const dashboardLink = session?.user?.role === "admin" ? "/admin" : "/dashboard";
+
+    console.log("[Client Render] HeroButtons | Status:", status, "| LoggedIn:", isLoggedIn);
 
     if (isLoggedIn) {
         return (

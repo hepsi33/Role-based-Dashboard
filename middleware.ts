@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export default auth((req) => {
     const isLoggedIn = !!req.auth;
     const { pathname } = req.nextUrl;
+    console.log(`[Middleware] Processing: ${pathname} | LoggedIn: ${isLoggedIn}`);
 
     const protectedRoutes = ["/dashboard", "/admin"];
     const authRoutes = ["/login", "/signup"];
@@ -19,6 +20,7 @@ export default auth((req) => {
 
     // 1. Redirect logged-in users away from auth pages (login/signup)
     if (isAuthRoute && isLoggedIn) {
+        console.log(`[Middleware] Authenticated user on auth route (${pathname}). Redirecting.`);
         const role = req.auth?.user?.role;
         if (role === 'admin') {
             return NextResponse.redirect(new URL("/admin", req.nextUrl));

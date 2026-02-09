@@ -7,6 +7,7 @@ import { NavButtons, HeroButtons } from "@/components/nav-buttons";
 export const dynamic = "force-dynamic";
 
 export default function GetStartedPage() {
+    console.log("[Server Render] Get Started Page");
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex flex-col">
             {/* Header */}

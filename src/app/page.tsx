@@ -4,6 +4,7 @@ import { NavButtons, HeroButtons } from "@/components/nav-buttons";
 export const dynamic = "force-dynamic";
 
 export default function Home() {
+  console.log("[Server Render] Landing Page");
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-4 md:px-6 h-16 flex items-center justify-between sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 text-black dark:text-white">
