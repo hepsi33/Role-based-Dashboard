@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         );
     } catch (error) {
         if (error instanceof z.ZodError) {
-            return NextResponse.json({ message: error.errors }, { status: 400 });
+            return NextResponse.json({ message: error.issues }, { status: 400 });
         }
         return NextResponse.json(
             { message: "An error occurred while registering the user" },

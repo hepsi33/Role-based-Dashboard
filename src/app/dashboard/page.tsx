@@ -18,7 +18,7 @@ export default function UserDashboard() {
                             <p className="text-sm font-medium text-gray-900">{session?.user?.name}</p>
                             <p className="text-xs text-gray-500">{session?.user?.email}</p>
                         </div>
-                        <Button variant="outline" size="sm" onClick={() => signOut({ callbackUrl: "/login" })}>
+                        <Button variant="outline" size="sm" onClick={() => signOut({ callbackUrl: "/" })}>
                             <LogOut className="w-4 h-4 mr-2" />
                             Sign Out
                         </Button>
@@ -28,7 +28,7 @@ export default function UserDashboard() {
 
             <main className="container mx-auto px-4 py-8 flex-1">
                 <div className="mb-8">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900">Welcome, {session?.user?.name?.split(' ')[0]}!</h2>
+                    <h2 className="text-3xl font-bold tracking-tight text-gray-900">Welcome, {session?.user?.name?.split(' ')[0] || 'User'}!</h2>
                     <p className="text-gray-500 mt-2">Here's what's happening today.</p>
                 </div>
 

@@ -33,7 +33,15 @@ export default function LoginPage() {
                     setError("Invalid credentials");
                 }
             } else {
-                router.push("/dashboard");
+                // Fetch session to check role
+                const sessionRes = await fetch("/api/auth/session");
+                const session = await sessionRes.json();
+
+                if (session?.user?.role === "admin") {
+                    router.push("/admin");
+                } else {
+                    router.push("/dashboard");
+                }
                 router.refresh();
             }
         } catch (err) {
