@@ -7,18 +7,26 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Activity, Users, DollarSign } from "lucide-react";
 import { SignOutButton } from "@/components/sign-out-button";
 
+export const dynamic = "force-dynamic";
+
 export default async function UserDashboard() {
     const session = await auth();
+    // console.log("Dashboard Session:", JSON.stringify(session, null, 2));
 
     if (!session?.user) {
+        console.log("No session user, redirecting...");
         redirect("/login");
     }
 
     const user = await db.query.users.findFirst({
         where: eq(users.id, session.user.id),
     });
+    // console.log("Fetched User from DB:", JSON.stringify(user, null, 2));
 
-    const displayName = user?.name || session.user.name || "User";
+    let displayName = user?.name || session.user.name || "User";
+    if (!displayName.trim()) {
+        displayName = "User";
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -37,9 +45,7 @@ export default async function UserDashboard() {
 
             <main className="container mx-auto px-4 py-8 flex-1">
                 <div className="mb-8">
-                    <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-                        Welcome, {displayName.split(' ')[0]}!
-                    </h2>
+                    Welcome, {displayName}!
                     <p className="text-gray-500 mt-2">Here's what's happening today.</p>
                 </div>
 

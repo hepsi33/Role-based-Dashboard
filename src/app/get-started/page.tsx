@@ -2,16 +2,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CheckCircle2, ShieldCheck, Zap, LayoutTemplate } from "lucide-react";
-import { auth } from "@/lib/auth";
-import { SignOutButton } from "@/components/sign-out-button";
+import { NavButtons, HeroButtons } from "@/components/nav-buttons";
 
 export const dynamic = "force-dynamic";
 
-export default async function GetStartedPage() {
-    const session = await auth();
-    const isLoggedIn = !!session?.user;
-    const dashboardLink = session?.user?.role === "admin" ? "/admin" : "/dashboard";
-
+export default function GetStartedPage() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex flex-col">
             {/* Header */}
@@ -20,18 +15,7 @@ export default async function GetStartedPage() {
                     Dashboard
                 </Link>
                 <div className="flex items-center gap-2">
-                    {isLoggedIn ? (
-                        <>
-                            <Button asChild variant="ghost">
-                                <Link href={dashboardLink}>Go to Dashboard</Link>
-                            </Button>
-                            <SignOutButton />
-                        </>
-                    ) : (
-                        <Button asChild>
-                            <Link href="/signup">Create Account</Link>
-                        </Button>
-                    )}
+                    <NavButtons />
                 </div>
             </header>
 
@@ -150,15 +134,9 @@ export default async function GetStartedPage() {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            {isLoggedIn ? (
-                                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto font-bold">
-                                    <Link href={dashboardLink}>Go to Dashboard</Link>
-                                </Button>
-                            ) : (
-                                <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto font-bold">
-                                    <Link href="/signup">Create Account Now</Link>
-                                </Button>
-                            )}
+                            <div className="flex justify-center">
+                                <HeroButtons />
+                            </div>
                         </CardContent>
                     </Card>
                 </div>

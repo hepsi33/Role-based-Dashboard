@@ -20,6 +20,7 @@ type PendingUser = {
 export default function AdminDashboard() {
     const { data: session } = useSession();
     const [pendingUsers, setPendingUsers] = useState<PendingUser[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetchPendingUsers();
@@ -27,27 +28,38 @@ export default function AdminDashboard() {
 
     const fetchPendingUsers = async () => {
         try {
+            setError(null);
             const res = await fetch("/api/admin/pending-users");
             if (res.ok) {
                 const data = await res.json();
                 setPendingUsers(data);
+            } else {
+                setError("Failed to fetch pending users.");
             }
         } catch (err) {
-            console.error("Failed to fetch users");
+            console.error("Failed to fetch users", err);
+            setError("An unexpected error occurred.");
         }
     };
 
     const handleAction = async (userId: string, action: "approve" | "reject") => {
         try {
-            await fetch("/api/admin/approve-user", {
+            setError(null);
+            const res = await fetch("/api/admin/approve-user", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ userId, action }),
             });
+
+            if (!res.ok) {
+                throw new Error("Failed to update user");
+            }
+
             // Optimistic update
             setPendingUsers(prev => prev.filter(u => u.id !== userId));
         } catch (err) {
-            console.error("Failed to update user");
+            console.error("Failed to update user", err);
+            setError("Failed to perform action. Please try again.");
         }
     };
 
@@ -67,6 +79,13 @@ export default function AdminDashboard() {
                         </Button>
                     </div>
                 </header>
+
+                {error && (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+                        <strong className="font-bold">Error: </strong>
+                        <span className="block sm:inline">{error}</span>
+                    </div>
+                )}
 
                 <div className="grid gap-6">
                     <Card>

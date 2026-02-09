@@ -1,15 +1,9 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/auth";
-import { SignOutButton } from "@/components/sign-out-button";
+import { NavButtons, HeroButtons } from "@/components/nav-buttons";
 
 export const dynamic = "force-dynamic";
 
-export default async function Home() {
-  const session = await auth();
-  const isLoggedIn = !!session?.user;
-  const dashboardLink = session?.user?.role === "admin" ? "/admin" : "/dashboard";
-
+export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-4 md:px-6 h-16 flex items-center justify-between sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 text-black dark:text-white">
@@ -17,18 +11,7 @@ export default async function Home() {
           <span className="font-bold text-xl tracking-tight">Dashboard</span>
         </Link>
         <nav className="flex gap-4 sm:gap-6 items-center">
-          {isLoggedIn ? (
-            <>
-              <Link className="text-sm font-medium hover:underline underline-offset-4" href={dashboardLink}>
-                Dashboard
-              </Link>
-              <SignOutButton />
-            </>
-          ) : (
-            <Link className="text-sm font-medium hover:underline underline-offset-4" href="/login">
-              Login
-            </Link>
-          )}
+          <NavButtons />
         </nav>
       </header>
       <main className="flex-1">
@@ -44,15 +27,7 @@ export default async function Home() {
                 </p>
               </div>
               <div className="space-x-4">
-                {isLoggedIn ? (
-                  <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200">
-                    <Link href={dashboardLink}>Go to Dashboard</Link>
-                  </Button>
-                ) : (
-                  <Button asChild size="lg" className="bg-white text-black hover:bg-gray-200">
-                    <Link href="/signup">Create Account</Link>
-                  </Button>
-                )}
+                <HeroButtons />
               </div>
             </div>
           </div>

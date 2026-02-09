@@ -59,6 +59,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
             return token;
         },
+        async redirect({ url, baseUrl }) {
+            // Always send users to dashboard if they are signed in
+            if (url.startsWith("/")) {
+                return `${baseUrl}${url}`;
+            } else if (new URL(url).origin === baseUrl) {
+                return url;
+            }
+            return baseUrl;
+        },
         async session({ session, token }) {
             if (session.user) {
                 session.user.role = token.role as string;
