@@ -1,8 +1,9 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Activity, Users, DollarSign, TrendingUp } from "lucide-react";
+import { Activity, Users, DollarSign, TrendingUp, Sparkles, FileText } from "lucide-react";
 import { SignOutButton } from "@/components/sign-out-button";
+import Link from "next/link";
 
 type DashboardClientProps = {
     displayName: string;
@@ -82,6 +83,29 @@ export function UserDashboardClient({ displayName, email }: DashboardClientProps
                             </p>
                         </CardContent>
                     </Card>
+                </div>
+
+                <div className="mb-8">
+                    <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-purple-400" />
+                        AI Study Tools
+                    </h3>
+                    <div className="grid gap-4 md:grid-cols-3">
+                        <Link href="/dashboard/ai-notes">
+                            <Card className="glass border-white/10 hover:bg-white/5 transition-colors cursor-pointer group">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                    <CardTitle className="text-sm font-medium text-gray-300 group-hover:text-white">YouTube to Notes</CardTitle>
+                                    <FileText className="h-4 w-4 text-purple-400 group-hover:scale-110 transition-transform" />
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-2xl font-bold text-white">Generate Notes</div>
+                                    <p className="text-xs text-gray-400 mt-1">
+                                        Summarize videos and create study guides instantly
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">

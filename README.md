@@ -14,6 +14,7 @@ A premium dashboard application with secure authentication, role-based access co
 - 👥 **Role-Based Access Control** - Admin and User roles with protected routes
 - ✅ **User Approval System** - New users require admin approval before accessing the dashboard
 - 🎨 **Dark Theme UI** - Modern glassmorphism design with gradient accents
+- 🤖 **AI Study Notes** - Generate comprehensive study guides from YouTube videos using Gemini AI
 - 📊 **Admin Dashboard** - View user stats (approved, pending, rejected) and manage approvals
 - ⚡ **Fast & Modern** - Built with Next.js 16 and Turbopack
 
